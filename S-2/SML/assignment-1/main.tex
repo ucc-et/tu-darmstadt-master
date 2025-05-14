@@ -1,4 +1,3 @@
-% !TeX root = main.tex
 \documentclass[
 	english,
         solution=true
@@ -1053,58 +1052,76 @@ In risk minimization, the rewards/costs assigned to different decision options (
 Who should determine these rewards/costs, which factors should be considered, and how? Propose a process for determining the adequate rewards/costs in a loan approval algorithm.
 
 \begin{solution}
-In risk minimization, the assigned loss values for decisions such as correct classification, misclassification, or rejection play a central role in shaping the behavior of a decision-making algorithm. For applications like loan approval, setting these values thoughtfully is critical to achieving responsible and effective outcomes.
+In risk minimization, the rewards and costs assigned to different decision outcomes—such as correct classification, misclassification, or rejection—fundamentally shape how a model behaves.
 
 \textbf{Who Should Determine the Rewards/Costs?}
 
-A cross-functional team should be involved in determining the appropriate reward and cost values:
-
+The assignment of rewards and costs should not be left solely to technical teams. It requires input from a group, including:
 \begin{itemize}
-    \item \textbf{Domain experts (e.g., finance professionals):} to quantify the financial impact of decision outcomes.
-    \item \textbf{Risk analysts:} to evaluate the probability and severity of loan defaults.
-    \item \textbf{Executives or product owners:} to align cost decisions with strategic business goals.
+    \item Domain experts – to provide insight into the real-world impact of decisions.
+    \item Risk and compliance officers – to ensure decisions align with regulations and avoid unfair outcomes.
+    \item Data scientists and ML engineers – to translate these qualitative inputs into quantitative values used in model training and evaluation.
+    \item Business stakeholders – to align cost/reward assignments with strategic goals and acceptable risk thresholds.
 \end{itemize}
 
 \textbf{Factors to Consider}
 
-When assigning losses or costs, the following factors should be considered:
+When assigning costs and rewards in classification systems, the following factors should be consider:
 
 \begin{itemize}
-    \item \textbf{Financial risk:} such as losses from defaulted loans (false positives) and missed profits from rejected good applicants (false negatives).
-    \item \textbf{Regulatory risk:} penalties or legal consequences for unfair or discriminatory decision-making.
-    \item \textbf{Customer experience:} trust and satisfaction may suffer if good applicants are wrongly rejected.
-    \item \textbf{Model uncertainty:} rejections may be used when the model lacks confidence.
-    \item \textbf{Operational costs:} including the costs of manual review when a case is rejected automatically.
+    \item Severity of misclassification: Some misclassifications have much higher stakes than others.
+    \item Uncertainty in model predictions: The model may prefer low-confidence predictions if rejection incurs lower loss than a potential mistake.
+    \item Cost of rejection: Rejection may involve handing over decisions to humans, which could have operational costs or delay consequences.
+    \item Long-term consequences: Consider reputation damage, user trust, or future legal risks associated with systematic bias or errors.
 \end{itemize}
 
-\textbf{Proposed Process for Determining Loss Values}
+\textbf{How Should the Costs Be Determined?}
 
 \begin{enumerate}
-    \item \textbf{Define all outcome types clearly:}
+    \item Define all possible outcomes: True positive, false positive, true negative, false negative, and rejection.
+    \item Estimate the real-world impact (financial, social, or legal) for each outcome.
+    \item Translate these impacts into loss values that reflect relative severity.
+    \item Test and validate using historical data, evaluating performance and fairness.
+    \item Refine and adjust periodically as societal, legal, or business factors evolve.
+\end{enumerate}
+
+\textbf{Process for Determining Adequate Rewards/Costs in a Loan Approval Algorithm}
+
+For a loan approval system, the process can be made specific as follows:
+\begin{enumerate}
+    \item Enumerate outcomes
     \begin{itemize}
-        \item True positive: loan approved, customer repays.
-        \item False positive: loan approved, customer defaults.
-        \item True negative: loan rejected, customer would have defaulted.
-        \item False negative: loan rejected, customer would have repaid.
-        \item Rejection: uncertain cases passed for manual review.
+        \item Approve a good applicant (true positive).
+        \item Approve a risky applicant who defaults (false positive).
+        \item Reject a bad applicant (true negative).
+        \item Reject a good applicant (false negative).
+        \item Reject due to uncertainty (rejection option).
     \end{itemize}
-    
-    \item \textbf{Quantify the economic impact:}
-    Estimate the monetary gain or loss associated with each outcome (e.g., profit from successful loans, loss from defaults).
-    
-    \item \textbf{Normalize to a loss scale:}
-    Define loss values such that:
-    \[
-    l_{\text{correct}} = 0, \quad
-    l_{\text{misclassified}} = \text{expected loss from wrong decision}, \quad
-    l_{\text{reject}} = \text{cost of lost opportunity}
-    \]
-    
-    \item \textbf{Simulate and analyze impact:}
-    Run simulations on historical data to observe how changes in these loss values affect classification behavior.
-    
-    \item \textbf{Review and refine periodically:}
-    Adjust loss values over time based on shifts in market risk, customer expectations, and regulatory guidelines.
+
+    \item Quantify impacts \begin{itemize}
+        \item Calculate expected profit from repaid loans and expected losses from defaults.
+        \item Estimate the opportunity costs of rejecting reliable applicants.
+        \item Define operational costs for rejected applications (e.g. manual review or lost customers).
+    \end{itemize}
+
+    \item Assign cost values
+    \begin{itemize}
+        \item \( l_{\text{correct}} = 0 \)
+        \item \( l_{\text{misclassified}} \): Potential financial loss from a default.
+        \item \( l_{\text{reject}} \): Cost of manual review or user dissatisfaction.
+    \end{itemize}
+
+    \item Simulate decisions
+    \begin{itemize}
+        \item Apply the model to historical loan data.
+        \item Adjust costs based on observed default rates, approval accuracy, and business outcomes.
+    \end{itemize}
+
+    \item Review
+    \begin{itemize}
+        \item Ensure that the cost structure reflects business risk tolerance, fairness expectations, and compliance needs.
+        \item Update regularly based on market trends and regulatory updates.
+    \end{itemize}
 \end{enumerate}
 
 \end{solution}
