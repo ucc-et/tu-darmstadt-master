@@ -84,9 +84,10 @@ problems by the time this is released, hold on a bit more for that specific prob
 
 \textbf{Programming tasks}: 3c), 4b), 4c), 6
 
-
 TEMPLATE: \url{https://colab.research.google.com/drive/1DfEty2lw1Wx3r7uDYu8qdzrQLQV2O3c-?usp=sharing}
 
+\textbf{Group 102}\\
+\textbf{Members: Lukas Depner, Louis Geiger, Ugurtan Can Cetin} 
 
 
 \begin{task}[points=20]{Maximum Likelihood Estimation}
@@ -98,6 +99,53 @@ We assume that samples are drawn i.i.d. from the Gaussian distribution: \\
 Determine the maximum likelihood estimator $\hat{\mu}$ for the unknown mean $\mu$ of the Gaussian distribution. (Note: Do not forget to show or argue that the estimator is indeed a maximum and not a minimum or saddle point.)\\
 
 \begin{solution}
+
+To find the maximum likelihood estimator $\hat{\mu}$, we will take the derivative w.r.t. $\mu$ of the Log-Likelihood (easier to compute than Likelihood). 
+\begin{align*}
+    LL &= \ln(\frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{1}{2} \frac{(x_1 - \mu)^2}{\sigma^2}} * ... * \frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{1}{2} \frac{(x_n - \mu)^2}{\sigma^2}}) \text{ | log of products is equivalent to sum of logs}\\
+    &= \ln(\frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{1}{2} \frac{(x_1 - \mu)^2}{\sigma^2}})+...+\ln(\frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{1}{2} \frac{(x_n - \mu)^2}{\sigma^2}})
+\end{align*}
+
+We will rewrite the first of those logs, and apply the changes to the $(n-1)$ others.
+
+\begin{align*}
+    \ln(\frac{1}{\sqrt{2\pi\sigma^2}}*e^{-\frac{1}{2} \frac{(x_1 - \mu)^2}{\sigma^2}}) &= \ln(\frac{1}{\sqrt{2\pi \sigma^2}})+\ln(e^{-\frac{1}{2} \frac{(x_1-\mu)^2}{\sigma^2}}) \\
+    &= \ln((\sqrt{2 \pi \sigma^2})^{-\frac{1}{2}})-\frac{1}{2} \frac{(x_1 - \mu)^2}{\sigma^2}*\ln(e) \\
+    &= -\frac{1}{2} *\ln(\sqrt{2\pi \sigma^2})-\frac{(x_1-\mu)^2}{2\sigma^2} \\
+    &= -\frac{1}{2} \ln(2\pi) - \frac{1}{2} \ln(\sigma^2)-\frac{(x_1-\mu)^2}{\sigma^2} \\
+    &= -\frac{1}{2} \ln(2\pi) - \ln(\sigma)-\frac{(x_1-\mu)^2}{\sigma^2}
+\end{align*}
+
+If we look at the whole LL, it will result into
+\[LL=(-\frac{1}{2} \ln(2\pi) - \ln(\sigma)-\frac{(x_1-\mu)^2}{\sigma^2})-...-(-\frac{1}{2} \ln(2\pi) - \ln(\sigma)-\frac{(x_n-\mu)^2}{\sigma^2})\]
+
+We can merge the sums $-\frac{1}{2} \ln(2\pi)$ and $-\ln(\sigma)$, and we get:
+\[LL=-\frac{n}{2} \ln(2\pi) - n * \ln(\sigma) - \frac{(x_1-\mu)^2}{2\sigma^2}-...- \frac{(x_n-\mu)^2}{2\sigma^2}\]
+Now we can compute the derivate w.r.t. $\mu$ (and it's easier).
+\begin{align*}
+    \frac{\delta}{ \delta \mu} LL &= \frac{\delta}{\delta \mu} -\frac{n}{2} \ln(2\pi) - n * \ln(\sigma) - \frac{(x_1-\mu)^2}{2\sigma^2}-...- \frac{(x_n-\mu)^2}{2\sigma^2} \\
+    &= 0 - + \frac{(x_1-\mu)}{\sigma^2}+...+\frac{(x_n-\mu)}{\sigma^2} \\
+    &= \frac{1}{\sigma^2}((x_1+...+x_n)-n\mu)
+\end{align*}
+
+To get the maximum estimator for $\mu$, we will set the derivative to $0$ and solve it for $\mu$.
+
+\begin{align*}
+    0 &= \frac{1}{\sigma^2}((x_1+...+x_n)-n\mu) \text{  | } \sigma^2\\
+    0 &= (x_1+...+x_n)-n\mu \text{  | } +n\mu \\
+    n\mu &= (x_1+...+x_n) \text{  | } :n \\
+    \mu &= \frac{(x_1+...+x_n)}{n} \\
+    \mu &= \frac{1}{n} \sum^n_{i=1} x_i
+\end{align*}
+
+to make sure its a maximum, the second derivative has to be less than 0.
+\begin{align*}
+    \frac{\delta^2}{\delta^2 \mu} &= \frac{\delta}{\delta \mu}(\frac{1}{\sigma^2}(x_1+...+x_n)-n\mu) \\ 
+    &= -\frac{n}{\sigma^2}
+\end{align*}
+
+So Maximum Likelihood Estimator for unknown $\mu$ is
+\[\hat{\mu}_{\text{MLE}}= \frac{1}{n} \sum^n_{i=1} x_i\]
 
 \end{solution}
 \end{subtask}
