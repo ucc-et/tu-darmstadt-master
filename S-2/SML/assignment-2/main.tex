@@ -156,7 +156,24 @@ So Maximum Likelihood Estimator for unknown $\mu$ is
 Determine the maximum likelihood estimator $\hat{\sigma}^{2}$ for the unknown variance \( \sigma^2 \) for the Gaussian distribution with unknown variance and known mean. You may reuse the derived log-likelihood function from a) and begin your derivation from there. 
 
 \begin{solution}
+\[LL=-\frac{n}{2} \ln(2\pi) - n * \ln(\sigma) - \frac{(x_1-\mu)^2}{2\sigma^2}-...- \frac{(x_n-\mu)^2}{2\sigma^2}\]
 
+We will get the derivative with respect to $\sigma$.
+\begin{align*}
+    \frac{\delta}{\delta \sigma} LL &= 0-\frac{n}{\sigma}+\frac{(x_1-\mu)^2}{\sigma^3}+...+\frac{(x_n-\mu)^2}{\sigma^3} \\
+    &= -\frac{n}{\sigma} + \frac{1}{\sigma^3}((x_1-\mu)^2+...+(x_n-\mu)^2)
+\end{align*}
+
+Now we will set it to $0$ and solve for $\sigma^2$ to get the Maximum Likelihood Estimator $\hat{\sigma}^2$.
+
+\begin{align*}
+    0 &= -\frac{n}{\sigma} + \frac{1}{\sigma^3}((x_1-\mu)^2+...+(x_n-\mu)^2) \text{  | } * \sigma \\
+    0 &= -n+\frac{1}{\sigma^2}((x_1-\mu)^2+...+(x_n-\mu)^2) \text{  | } +n \\
+    n &= \frac{1}{\sigma^2}((x_1-\mu)^2+...+(x_n-\mu)^2) \text{  | } *\sigma^2 \\
+    n\sigma^2 &= (x_1-\mu)^2+...+(x_n-\mu)^2 \text{  | } :n \\
+    \sigma^2 &= \frac{(x_1-\mu)^2+...+(x_n-\mu)^2}{n}
+\end{align*}
+\[\hat{\sigma}^2_{\text{MLE}}= \frac{(x_1-\mu)^2+...+(x_n-\mu)^2}{n}\]
 \end{solution}
 \end{subtask}
 
