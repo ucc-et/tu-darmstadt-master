@@ -191,6 +191,53 @@ Hint: Use the following identity for $x$ and for $\Bar{x}$:
 
 \begin{solution}
 
+\[\hat{\sigma}^2=\frac{1}{n} \sum^n_{i=1} (x_i-\mu)^2\]
+
+With $\overline{x}=\frac{1}{n} \sum^n_{i=1} x_i$ as the estimate of the mean $\mu$. To show check if the estimator is unbiased, we have to see, if $E[\hat{\sigma}^2]=\sigma^2$ holds.
+
+First we will get rid of the exponen of $(x_i-\overline{x})^2$
+
+\begin{align*}
+    \sum^n_{i=1}(x_i-\overline{x})^2 &=   \sum^n_{i=1} x_i^2-2x_i\overline{x}+\overline{x}^2 \\
+    &= \sum^n_{i=1} x_i^2 - 2\overline{x} \sum_{i=1}^n x_i + \sum^n_{i=1} \overline{x}^2 \text{ | replace sum of datapoints with mean estimation}\\
+    &= \sum^n_{i=1} x_i^2 - 2 \overline{x} * n\overline{x} + n\overline{x}^2 \\
+    &= \sum^n_{i=1} x_i^2 - 2n\overline{x}^2 + n \overline{x}^2\\
+    &= \sum^n_{i=1} x_i^2 - n\overline{x}^2
+\end{align*}
+
+\[\hat{\sigma}^2=\frac{1}{n} \sum^n_{i=1} x^2_i - n\overline{x}^2\]
+
+After simplifying we have to find the expectation of $\hat{\sigma}^2$. Because for the estimator to be unbiased, $E[\hat{\sigma}^2]=\sigma^2$ has to be true.
+\begin{align*}
+    E[\hat{\sigma}^2] &= E[\frac{1}{n} \sum^n_{i=1} x^2_i-n \overline{x}^2] \\
+    &= \frac{1}{n} *E[\sum^n_{i=1} x_i^2]-E[\overline{x}^2] \\
+    &= \frac{1}{n} \sum^n_{i=1} E[x^2_i]-E[\overline{x}^2]
+\end{align*}
+
+Lets set $\mu=E[x_i]$ and $\sigma^2 = Var(x_i)$ and use the Identity to get $E[X^2]$.
+\begin{align*}
+    E[X^2]&=Var[X]+(E[X])^2
+    E[X_i^2]&=\sigma^2 + \mu^2 \text{ | for each data point}\\
+    \frac{1}{n} \sum^n_{i=1} E[X_i^2] &= \frac{1}{n} \sum^n_{i=1} (\sigma^2 + \mu^2) \\
+    &=\sigma^2+\mu^2 
+\end{align*}
+
+Now we need to look at $E[\overline{X}^2]$. \\
+\[E[\overline{x}]=E[\frac{1}{n} \sum^n_{i=1} x_i]=\frac{1}{n} \sum^n_{i=1} E[x_i]=\frac{1}{n} n*\mu=\mu\]
+
+\[Var(\overline{x})=Var(\frac{1}{n} \sum^n_{i=1} x_i).\]
+Because the data points are independent, $Var(\sum^n_{i=1} x_i)=\sum^n_{i=1} Var(X_i)=n*\sigma^2$
+Therefore following holds:
+\[Var(\overline{X})=Var(\frac{1}{n} \sum^n_{i=1} X_i)= \frac{1}{n^2} Var(\sum^n_{i=1} X_i)=\frac{1}{n^2}*n*\sigma^2=\frac{\sigma^2}{n}\]
+Thus $E[\overline{X}^2]=\frac{\sigma
+^2}{n}+\mu^2$, and we can substitute the values back for $E[\hat{\sigma}^2]$
+
+\begin{align*}
+    E[\hat{\sigma^2}]&=(\sigma^2 + \mu^2)-(\frac{\sigma^2}{n}+\mu^2)\\
+    &= \sigma^2 + \mu^2 - \frac{\sigma^2}{n}-\mu^2 \\
+    &=\sigma^2-\frac{\sigma^2}{n}
+\end{align*}
+This shows, that the estimatore $\hat{\sigma}^2=\frac{1}{n} \sum^n_{i=1}(x_i - \overline{x})^2$ is biased, because $E[\hat{\sigma}^2] \ne \sigma^2$
 \end{solution}
 
 \begin{subtask}[points=5]
