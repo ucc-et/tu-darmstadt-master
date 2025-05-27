@@ -248,6 +248,22 @@ Draw or plot the distribution using your derived estimators for the mean and var
 
 \begin{solution}
 
+MLE for mean: 
+\[\overline{x}=\frac{1}{n} \sum^n_{i=1} x_i = \frac{38+40.5+41+42+46}{5}=41.5\]
+
+MLE for variance:
+\[\sigma^2_{\text{MLE}} = \frac{1}{n} \sum^n_{i=1} (x_i-\overline{x})^2=\frac{(-3.5)^2+(-1)^2+(-0.5)^2+(0.5)^2+(4.5)^2}{5}=\frac{34}{5}=6.8\]
+\[\hat{\sigma}=\sqrt{6.8}\approx 2.6\]
+
+Plot:
+
+\begin{center}
+    \includegraphics[width=0.75\linewidth]{normalDistro1d.png}
+\end{center}
+
+Previously we calculated the Maximum Likelihood Estimator for the variance (biased) and Maximum Likelihood Estimator for the mean. \\
+The graph has 41.5 as the mean and $\hat{\sigma}^2_{MLE}=6.8$. The center in the distribution is representing the true mean (on average). But the spread of the plot (width, see dotted lines) is too narrowbecause it underestimates the true variance.
+
 \end{solution}
 \end{subtask}
 \end{task}
