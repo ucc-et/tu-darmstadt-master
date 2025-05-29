@@ -143,6 +143,7 @@ to make sure its a maximum, the second derivative has to be less than 0.
     \frac{\delta^2}{\delta^2 \mu} &= \frac{\delta}{\delta \mu}(\frac{1}{\sigma^2}(x_1+...+x_n)-n\mu) \\ 
     &= -\frac{n}{\sigma^2}
 \end{align*}
+As the number of samples $n$ must be $\geq 1$, we know that its a maximum.
 
 So Maximum Likelihood Estimator for unknown $\mu$ is
 \[\hat{\mu}_{\text{MLE}}= \frac{1}{n} \sum^n_{i=1} x_i\]
@@ -311,6 +312,36 @@ List the nearest neighbors of A and B that are relevant for the classification, 
 
 \begin{solution}
 
+With $k=3$, we will need the $3$ nearest neighbors for points $A$ and for $B$. The three closest neighbors for $A$ are the two red fruits and one orange fruit:
+\textbf{Point A: $(1, 5)$}
+\begin{itemize}
+    \item $x_{\text{red}1}=(2, 6)$ : Distance: $\sqrt{2}$; Kernel Value: $0,6703$ 
+    \item $x_{\text{orange}}=(3, 5)$ : Distance:$2$; Kernel Value: $0,4493$
+    \item $x_{\text{red}2}=(1, 2)$ : Distance: $3$; Kernel Value: $0,1653$
+\end{itemize}
+
+Kernel Sums for Point A:
+\begin{itemize}
+    \item Class red: $0,6703+0,1653=0,8356$
+    \item Class orange: $0,4493$
+    \item Point A is assigned to class red.
+\end{itemize}
+
+\textbf{Point B: $(5, 3)$}
+\begin{itemize}
+    \item $x_{\text{green}1}=(4, 2)$ : Distance: $\sqrt{2}$; Kernel Value: $0,6703$ 
+    \item $x_{\text{blue}1}=(6, 4)$ : Distance: $\sqrt{2}$; Kernel Value: $0,6703$
+    \item $x_{\text{yellow}}=(5, 5)$ : Distance: $2$; Kernel Value: $0,4493$
+\end{itemize}
+
+Kernel Sums for Point b:
+\begin{itemize}
+    \item Class green: $0,6703$
+    \item Class blue: $0,6703$
+    \item Class yellow: $0,4493$
+    \item Point B is assigned either to green or blue. Because it wasn't defined how to handle tie-breaks, we will leave it at that.
+\end{itemize}
+
 \end{solution}
 \end{subtask}
 
@@ -319,6 +350,9 @@ What problem arises if we use the kernel to weight the neighbors’ contribution
 \end{subtask}
 
 \begin{solution}
+
+If we look at some examples, and calculate the kernel with a distance of $\sqrt{2}$, and $2$, we will see the problem that arises.\\
+With $\alpha=20$ the kernel value for $\sqrt{2}$ is $4,248354255*10^{-18}$ and the kernel value for distance $2$ is  $1,804851388*10^{-35}$. If we just look at the exponent, we see that the closest neighbor will contribute a lot, and somewhat close neighbors will be very small.  This kann lead to overfitting, because it is way too sensitive.
 
 \end{solution}
 \end{task}
