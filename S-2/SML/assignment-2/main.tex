@@ -377,6 +377,12 @@ We want to estimate the distribution of the mean $ p(\mu \mid \mathcal{D}) $ usi
 
 \begin{solution}
 
+The likelihood function would be:
+\[p(D|\mu)=\Pi^n_{i=1} p(x_i|\mu)\]
+beause the ddatapoints are drawn independently. \\
+The prior is given in the task description:
+\[p(\mu)=\frac{1}{\sqrt{2\pi\tau^2}}\exp (-\frac{(\mu-\mu_0)^2}{2\tau^2})\]
+
 \end{solution}
 
 \begin{subtask}[points=2]
@@ -388,6 +394,11 @@ We want to estimate the distribution of the mean $ p(\mu \mid \mathcal{D}) $ usi
 \end{subtask}
 
 \begin{solution}
+
+\begin{enumerate}
+    \item The assumption made is, that the posterior is also a Gaussian.
+    \item Conjugate priors
+\end{enumerate}
 
 \end{solution}
 
@@ -415,19 +426,28 @@ Complete the corresponding section of the notebook as part of this task.
         \item Implement the update rules for the parameters of the posterior.
         \item Compute the parameter values for the posterior as well as the maximum likelihood estimator for the mean for $n \in \{1, 2, 5, 10, 100, 1000\}$, where n is the number of data points, and plot the prior, posterior as well as the maximum likelihood estimate of the mean for each value of n resulting in 6 plots.
     \end{itemize}
-
-
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Task4c)_Plot_Example.png}
-    \caption{Resulting Plot for n=1}
-    \label{fig:task4c-plot-n1}
-\end{figure}
     Now using the plots, describe the observed behavior. What are the main differences between maximum likelihood estimation and Bayesian estimation?
 \end{subtask}
 
 \begin{solution}
+
+In the Prior and Posterior for $N=1$, the posterior is pulled towards the prior, which is why it is not matching with the MLE line. Similar behaviour is in $N=2$\\
+In $N=5$ and $N=10$ the posterior mean is closer to the MLE. It pulls away from the prior, because more datapoints are used.\\
+The posterior in $N=100$ and $N=1000$ is aligning with the MLE, and the influence of the prior is very little.\\
+
+\begin{center}
+    \includegraphics[width=0.75\linewidth]{priorAndPosteriorN1.png}
+\end{center}
+
+\underline{\textbf{Pictures of the other plots (N=2, 5, 10, 100, 1000) will be provided in a zip}}
+
+\textbf{Differences between MLE and Bayesian estimation}
+
+The result of the MLE is a point (in $N=1000$ its 5.04 for example). The result of the Bayesian estimation is a distribution. This means, that the posterior variance represents the confidence in the estimation, but MLE does not, due to its point characteristic. \\
+
+Depending on the amount of data provided, the two estimators behave differently. For smaller data amounts, MLE is fitting to much to noise and becomes unstable. The bayesian estimation is influenced by the prior, which makes it more stable. With more data amounts MLE is accurate, and bayesian estimation approaches the MLE.
+
+
 
 \end{solution}
 \end{task}
