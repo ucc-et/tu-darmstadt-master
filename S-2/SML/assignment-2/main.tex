@@ -549,6 +549,21 @@ Show mathematically why the optimal solution for \( \mathbf{w}^* \) grows withou
 \end{subtask}
 \begin{solution}
 
+
+First we will re-formulate the problem.
+
+\begin{align*}
+    (w^Tm_1-w^T-m_2)^2 = (w^T(m_1-m_2))^2
+\end{align*}
+ We define $m_\delta=m_1-m_2$.
+ \[w^*=\arg \max_w (w^Tm_\delta)^2\]
+
+we want to maximize the dot product, to do that, we want $w$ to be in the same direction of $m_\delta$, because this is the perfect condition to scale. Because $w$ is unbounded, we can just make it as long as we want. It grows without bound, because there is always a larger possible length that can be taken.\\
+
+\textbf{What does this imply about the nature of this optimization problem?}\\
+
+Without limiting the length of the vector, there is no actual best solution.
+
 \end{solution}
 
 \begin{subtask}[points=3]{}
@@ -577,6 +592,19 @@ In this task, at least one answer is true for each multiple-choice question. Eac
 
 
 \begin{solution}
+
+\begin{enumerate}
+    \item True Statements: Fisher's Linear Descriminant in the two-class case
+    \begin{itemize}
+        \item \textbf{Fisher's Linear Discriminant maximizes the distance between the means of the classes while minimizing the variance within each class}
+        \item \textbf{A solution $w^*$ exists for non-linearly separable data under FIsher's criterion}\\ Explanation: Technically, a solution will be found in non-linearly separable data. It won't be a perfect solution, but it will be a solution.
+    \end{itemize}
+    \item True Statements: Implications for Fisher's Linear Discriminant within-class covariance matrix $S_W$ is singular.
+    \begin{enumerate}
+        \item \textbf{The solution $w$ cannot be computed} \\ 
+        Explanation: The Fisher's Linear Discriminant is calculated with $w \propto S^{-1}_W (m_1-m_2)$. If the matrix is not invertible, it can not be computed. (Lecture 4 Slide 39)
+    \end{enumerate}
+\end{enumerate}
 
 \end{solution}
 \end{task}
