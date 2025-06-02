@@ -412,10 +412,10 @@ Complete the corresponding section of the notebook as part of this task.
     \begin{align}
         \mu_{n} &= \frac{\sigma^{2} \cdot \mu_{0}}{\sigma^{2}+n\cdot\sigma_{0}^{2}} + \frac{\sigma_{0}^{2}\cdot \sum_{i=1}^{n} x_i}{\sigma^{2}+n\cdot\sigma_{0}^{2}}\\
     \end{align}
-        \text{We substitute the sum $\sum_{i=1}^{n} x_i$ with $\sum_{i=1}^{n} x_i = n \cdot \frac{1}{n} \sum_{i=1}^{n} = n \cdot \Bar{x} = n \cdot \mu_{MLE}$ }\\
+        \text{We substitute the sum $\sum_{i=1}^{n} x_i$ with $\sum_{i=1}^{n} x_i = n \cdot \frac{1}{n} \sum_{i=1}^{n} x_{i} = n \cdot \Bar{x} = n \cdot \mu_{MLE}$ }\\
     \begin{align}
         \mu_{n} &= \frac{\sigma^{2} \cdot \mu_{0}}{\sigma^{2}+n\cdot\sigma_{0}^{2}} + \frac{\sigma_{0}^{2}\cdot n \cdot \mu_{MLE}}{\sigma^{2}+n\cdot\sigma_{0}^{2}}\\
-        \sigma_{n}^{2} &= \frac{1}{\sigma_{0}^{2}} + \frac{n}{\sigma^{2}} 
+        \sigma_{n}^{2} &= \left(\frac{1}{\sigma_{0}^{2}} + \frac{n}{\sigma^{2}}\right)^{-1} 
     \end{align}
 
     You are not allowed to import any additional functionality. Begin by loading the file \texttt{GaussianBayesianEstimation.npy}. Here are some rough guidelines for the implementation of this task:
@@ -426,6 +426,16 @@ Complete the corresponding section of the notebook as part of this task.
         \item Implement the update rules for the parameters of the posterior.
         \item Compute the parameter values for the posterior as well as the maximum likelihood estimator for the mean for $n \in \{1, 2, 5, 10, 100, 1000\}$, where n is the number of data points, and plot the prior, posterior as well as the maximum likelihood estimate of the mean for each value of n resulting in 6 plots.
     \end{itemize}
+
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Task4c)_Plot_Example.png}
+    \caption{Resulting Plot for n=1}
+    \label{fig:task4c-plot-n1}
+\end{figure}
+
     Now using the plots, describe the observed behavior. What are the main differences between maximum likelihood estimation and Bayesian estimation?
 \end{subtask}
 
@@ -470,13 +480,13 @@ The EM algorithm is a method for solving this problem. EM is an iterative method
     \item Expectation step (E-step): In this step, we compute the probabilistic assignment of data points to the probability distributions. In other words, we want to compute the \textbf{responsibilities}, i.e., the probability that each data point belongs to each Gaussian component using the \textit{current parameters}.
     \begin{equation*}
     a_{nj} = p(j|x_n) = \frac{ \pi_j \mathcal{N}(x_n  | \mu_j, \sigma_j) }
-                                { \sum_{i=1}^N \pi_i \mathcal{N}(x_n | \mu_i, \sigma_i) }.
+                                { \sum_{i=1}^J \pi_i \mathcal{N}(x_n | \mu_i, \sigma_i) }.
     \end{equation*}
     \item Maximization step (M-step): Using the responsibilities computed from the previous E-step, we re-estimate the parameters (means, covariances, and mixing coefficients) of each Gaussian components. 
     \begin{equation*}
-    \mu_j = \frac{ \sum_{i=1}^N a_{nj}x_n } { \sum_{i=1}^N a_{nj} }, \quad
-    \sigma_j^2 = \frac{ \sum_{i=1}^N a_{nj}(x_n-\mu_j)(x_n-\mu_j)^T } { \sum_{i=1}^N a_{nj} },
-    \quad \pi_j = \frac{ \sum_{i=1}^N a_{nj} } {N }.
+    \mu_j = \frac{ \sum_{n=1}^N a_{nj}x_n } { \sum_{n=1}^N a_{nj} }, \quad
+    \sigma_j^2 = \frac{ \sum_{n=1}^N a_{nj}(x_n-\mu_j)(x_n-\mu_j)^T } { \sum_{n=1}^N a_{nj} },
+    \quad \pi_j = \frac{ \sum_{n=1}^N a_{nj} } {N }.
     \end{equation*}
 \end{enumerate}
 An iteration of the EM algorithm consists of an E-step and a M-step. After each iteration, we evaluate the log likelihood with the new parameter estimates obtained from the last M-step and check for convergence. Below are some additional notes about the algorithm.
